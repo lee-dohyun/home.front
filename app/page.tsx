@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+const profileUrl = "https://customer.leedohyun.com/profile?redirect_uri=https://home.leedohyun.com/";
+
 const CATEGORIES = [
   "베스트",
   "로켓배송",
@@ -78,7 +80,23 @@ export default function Home() {
           </div>
           <div style={{ marginLeft: "auto", display: "flex", gap: 12, alignItems: "center" }}>
             {checked && name ? (
-              <span style={{ fontSize: 14, fontWeight: 600 }}>{name}님, 환영합니다.</span>
+              <>
+                <span style={{ fontSize: 14, fontWeight: 600 }}>{name}님, 환영합니다.</span>
+                <a
+                  href={profileUrl}
+                  style={{
+                    padding: "8px 18px",
+                    borderRadius: 20,
+                    border: "1px solid #111",
+                    color: "#111",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  나의 정보
+                </a>
+              </>
             ) : (
               checked && (
                 <>
