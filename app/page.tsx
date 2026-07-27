@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const profileUrl = "https://customer.leedohyun.com/profile?redirect_uri=https://home.leedohyun.com/";
+const profileUrl = "/profile";
 
 const CATEGORIES = [
   "베스트",
