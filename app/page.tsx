@@ -46,6 +46,11 @@ export default function Home() {
       .finally(() => setChecked(true));
   }, []);
 
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
+    window.location.reload();
+  };
+
   return (
     <div style={{ minHeight: "100vh", background: "#f7f7f8", color: "#111" }}>
       {/* 헤더 */}
@@ -96,6 +101,21 @@ export default function Home() {
                 >
                   나의 정보
                 </a>
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    padding: "8px 18px",
+                    borderRadius: 20,
+                    border: "1px solid #999",
+                    color: "#666",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    background: "transparent",
+                    cursor: "pointer",
+                  }}
+                >
+                  로그아웃
+                </button>
               </>
             ) : (
               checked && (
