@@ -22,6 +22,15 @@ adding features that need identity, check `auth.api` and `gateway` for the curre
 (cookie name `ACCESS_TOKEN`, forwarded headers `X-User-Id`/`X-User-Role`) rather than assuming
 any existing pattern here — there isn't one yet.
 
+**Gateway whitelist gotcha**: `home.leedohyun.com` is not currently in `gateway`'s
+`JwtAuthenticationFilter` `PROTECTED_HOSTS`, so pages here are public by default today. But if this
+repo ever adds a host-scoped auth requirement, or if a page here calls a `PROTECTED_HOSTS` domain's API
+(e.g. `customer.leedohyun.com/api/auth/**`) that must work pre-login, that path needs its own entry in
+`gateway`'s `PUBLIC_EXACT_PATHS`/`PUBLIC_PATH_PREFIXES` — routing config in this repo has no effect on
+that decision, the two repos are decoupled. See `gateway/CLAUDE.md`'s "Key implication for changes"
+section and the 2026-08-02 `/verify` page incident there for a concrete example of this biting in
+`customer.front`.
+
 ## Tech stack
 
 - **Framework**: Next.js 15 (App Router), React 19, TypeScript 5
