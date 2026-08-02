@@ -29,11 +29,13 @@ const PRODUCTS = [
   { title: "무선 청소기", price: "189,000원", tag: "로켓배송", color: "#0891b2" },
 ];
 
+const CUSTOMER_BASE_URL =
+  process.env.NEXT_PUBLIC_CUSTOMER_BASE_URL ?? "https://customer.posselect.com";
+const HOME_BASE_URL = process.env.NEXT_PUBLIC_HOME_BASE_URL ?? "https://home.posselect.com";
+
 export default function Home() {
-  const loginUrl =
-    "https://customer.leedohyun.com/login?redirect_uri=https://home.leedohyun.com/";
-  const signupUrl =
-    "https://customer.leedohyun.com/signup?redirect_uri=https://home.leedohyun.com/";
+  const loginUrl = `${CUSTOMER_BASE_URL}/login?redirect_uri=${HOME_BASE_URL}/`;
+  const signupUrl = `${CUSTOMER_BASE_URL}/signup?redirect_uri=${HOME_BASE_URL}/`;
 
   const [name, setName] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);

@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 
 type Me = { email: string; name: string };
 
-const loginUrl =
-  "https://customer.leedohyun.com/login?redirect_uri=https://home.leedohyun.com/profile";
+const CUSTOMER_BASE_URL =
+  process.env.NEXT_PUBLIC_CUSTOMER_BASE_URL ?? "https://customer.posselect.com";
+const HOME_BASE_URL = process.env.NEXT_PUBLIC_HOME_BASE_URL ?? "https://home.posselect.com";
+
+const loginUrl = `${CUSTOMER_BASE_URL}/login?redirect_uri=${HOME_BASE_URL}/profile`;
 
 const inputStyle: React.CSSProperties = {
   width: "100%",
