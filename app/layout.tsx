@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DH Store",
-  description: "DH Store 데모 페이지",
+  title: "POSSELECT",
+  description: "검증된 상품만 엄선하는 POSSELECT",
 };
 
 export default function RootLayout({
