@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Tag, Input, BlueprintCorners } from "@posselect/ui";
 
 const profileUrl = "/profile";
-
-const NAVY = "#0f172a";
-const ACCENT = "#2563eb";
 
 const CATEGORIES = [
   "베스트",
@@ -63,12 +61,12 @@ export default function Home() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8fafc", color: NAVY }}>
+    <div style={{ minHeight: "100vh", background: "var(--color-bg)", color: "var(--color-text)" }}>
       {/* 신뢰 안내 바 */}
       <div
         style={{
-          background: NAVY,
-          color: "#e2e8f0",
+          background: "var(--color-accent-900)",
+          color: "var(--color-neutral-100)",
           fontSize: 12,
         }}
       >
@@ -91,7 +89,7 @@ export default function Home() {
       </div>
 
       {/* 헤더 */}
-      <header style={{ background: "#fff", borderBottom: "1px solid #e2e8f0" }}>
+      <header style={{ background: "var(--color-surface)", borderBottom: "1px solid var(--color-divider)" }}>
         <div
           style={{
             maxWidth: 1200,
@@ -102,87 +100,41 @@ export default function Home() {
             gap: 24,
           }}
         >
-          <span style={{ fontSize: 22, fontWeight: 800, color: NAVY, letterSpacing: -0.5 }}>
+          <span
+            style={{
+              fontFamily: "var(--font-heading)",
+              fontWeight: 600,
+              fontSize: 22,
+              color: "var(--color-accent)",
+              letterSpacing: -0.5,
+            }}
+          >
             POSSELECT
           </span>
           <div style={{ flex: 1, maxWidth: 560 }}>
-            <input
-              placeholder="검색어를 입력하세요 (준비 중)"
-              disabled
-              style={{
-                width: "100%",
-                padding: "10px 16px",
-                border: `1.5px solid ${ACCENT}`,
-                borderRadius: 6,
-                fontSize: 14,
-                background: "#f8fafc",
-                color: "#94a3b8",
-              }}
-            />
+            <Input placeholder="검색어를 입력하세요 (준비 중)" disabled />
           </div>
           <div style={{ marginLeft: "auto", display: "flex", gap: 12, alignItems: "center" }}>
             {checked && name ? (
               <>
                 <span style={{ fontSize: 14, fontWeight: 600 }}>{name}님, 환영합니다.</span>
-                <a
-                  href={profileUrl}
-                  style={{
-                    padding: "8px 18px",
-                    borderRadius: 6,
-                    border: `1px solid ${NAVY}`,
-                    color: NAVY,
-                    fontSize: 13,
-                    fontWeight: 600,
-                    textDecoration: "none",
-                  }}
-                >
+                <a href={profileUrl} className="btn btn-secondary blueprint">
+                  <BlueprintCorners />
                   나의 정보
                 </a>
-                <button
-                  onClick={handleLogout}
-                  style={{
-                    padding: "8px 18px",
-                    borderRadius: 6,
-                    border: "1px solid #cbd5e1",
-                    color: "#64748b",
-                    fontSize: 13,
-                    fontWeight: 600,
-                    background: "transparent",
-                    cursor: "pointer",
-                  }}
-                >
+                <button className="btn btn-ghost" onClick={handleLogout}>
                   로그아웃
                 </button>
               </>
             ) : (
               checked && (
                 <>
-                  <a
-                    href={loginUrl}
-                    style={{
-                      padding: "8px 18px",
-                      borderRadius: 6,
-                      background: NAVY,
-                      color: "#fff",
-                      fontSize: 13,
-                      fontWeight: 600,
-                      textDecoration: "none",
-                    }}
-                  >
+                  <a href={loginUrl} className="btn btn-primary blueprint">
+                    <BlueprintCorners />
                     로그인
                   </a>
-                  <a
-                    href={signupUrl}
-                    style={{
-                      padding: "8px 18px",
-                      borderRadius: 6,
-                      border: `1px solid ${NAVY}`,
-                      color: NAVY,
-                      fontSize: 13,
-                      fontWeight: 600,
-                      textDecoration: "none",
-                    }}
-                  >
+                  <a href={signupUrl} className="btn btn-secondary blueprint">
+                    <BlueprintCorners />
                     회원가입
                   </a>
                 </>
@@ -197,24 +149,14 @@ export default function Home() {
             margin: "0 auto",
             padding: "0 24px 12px",
             display: "flex",
-            gap: 20,
+            gap: 8,
             overflowX: "auto",
           }}
         >
           {CATEGORIES.map((c) => (
-            <span
-              key={c}
-              style={{
-                fontSize: 13,
-                color: "#334155",
-                whiteSpace: "nowrap",
-                cursor: "default",
-                paddingBottom: 4,
-                borderBottom: "2px solid transparent",
-              }}
-            >
+            <Tag key={c} variant="outline">
               {c}
-            </span>
+            </Tag>
           ))}
         </nav>
       </header>
@@ -228,18 +170,21 @@ export default function Home() {
         }}
       >
         <div
+          className="card blueprint elev-md"
           style={{
             height: 180,
-            borderRadius: 8,
-            background: `linear-gradient(135deg, ${NAVY}, #1e3a8a)`,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             padding: "0 40px",
+            background: "var(--color-accent)",
             color: "#fff",
           }}
         >
-          <div style={{ fontSize: 24, fontWeight: 800 }}>검증된 상품만 엄선했습니다</div>
+          <BlueprintCorners />
+          <div style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 24 }}>
+            검증된 상품만 엄선했습니다
+          </div>
           <div style={{ fontSize: 14, opacity: 0.85, marginTop: 8 }}>
             준비 중인 페이지입니다 — 상품/배너는 추후 실제 데이터로 교체 예정
           </div>
@@ -248,7 +193,15 @@ export default function Home() {
 
       {/* 상품 그리드 (하드코딩, 클릭 동작 없음) */}
       <main style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px 60px" }}>
-        <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 16, color: NAVY }}>
+        <h2
+          style={{
+            fontFamily: "var(--font-heading)",
+            fontWeight: 600,
+            fontSize: 18,
+            marginBottom: 16,
+            color: "var(--color-text)",
+          }}
+        >
           지금 뜨는 상품
         </h2>
         <div
@@ -259,43 +212,29 @@ export default function Home() {
           }}
         >
           {PRODUCTS.map((p) => (
-            <div
-              key={p.title}
-              style={{
-                background: "#fff",
-                border: "1px solid #e2e8f0",
-                borderRadius: 10,
-                overflow: "hidden",
-                cursor: "default",
-                boxShadow: "0 1px 2px rgba(15, 23, 42, 0.04)",
-              }}
-            >
+            <div key={p.title} className="card blueprint elev-sm">
+              <BlueprintCorners />
               <div
                 style={{
                   height: 160,
-                  background: "#e2e8f0",
+                  background: "var(--color-neutral-200)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#64748b",
+                  color: "var(--color-neutral-600)",
                   fontSize: 13,
                 }}
               >
                 이미지 준비 중
               </div>
               <div style={{ padding: 12 }}>
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: ACCENT,
-                    fontWeight: 700,
-                    marginBottom: 4,
-                  }}
-                >
-                  {p.tag}
+                <div className="card-kicker">{p.tag}</div>
+                <div className="card-title" style={{ fontSize: 14 }}>
+                  {p.title}
                 </div>
-                <div style={{ fontSize: 14, marginBottom: 6, color: NAVY }}>{p.title}</div>
-                <div style={{ fontSize: 16, fontWeight: 800, color: NAVY }}>{p.price}</div>
+                <div className="card-meta" style={{ fontSize: 16, fontWeight: 800 }}>
+                  {p.price}
+                </div>
               </div>
             </div>
           ))}
@@ -304,21 +243,29 @@ export default function Home() {
 
       <footer
         style={{
-          borderTop: "1px solid #e2e8f0",
-          background: "#fff",
+          borderTop: "1px solid var(--color-divider)",
+          background: "var(--color-surface)",
           padding: "32px 24px",
           fontSize: 12,
-          color: "#64748b",
+          color: "var(--color-neutral-700)",
         }}
       >
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ fontSize: 15, fontWeight: 800, color: NAVY, marginBottom: 8 }}>
+          <div
+            style={{
+              fontFamily: "var(--font-heading)",
+              fontWeight: 600,
+              fontSize: 15,
+              color: "var(--color-accent)",
+              marginBottom: 8,
+            }}
+          >
             POSSELECT
           </div>
           <div style={{ lineHeight: 1.8 }}>
             상호: POSSELECT · 고객센터: 준비 중 (평일 09:00~18:00) · 사업자정보: 준비 중
           </div>
-          <div style={{ marginTop: 12, color: "#94a3b8" }}>
+          <div style={{ marginTop: 12, color: "var(--color-neutral-500)" }}>
             © POSSELECT — 데모 페이지, 상품 정보는 실제와 무관합니다.
           </div>
         </div>

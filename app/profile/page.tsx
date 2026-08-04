@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Field, Input, Button, BlueprintCorners } from "@posselect/ui";
 
 type Me = { email: string; name: string };
 
@@ -9,18 +10,6 @@ const CUSTOMER_BASE_URL =
 const HOME_BASE_URL = process.env.NEXT_PUBLIC_HOME_BASE_URL ?? "https://home.posselect.com";
 
 const loginUrl = `${CUSTOMER_BASE_URL}/login?redirect_uri=${HOME_BASE_URL}/profile`;
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: 12,
-  marginTop: 4,
-  border: "1.5px solid #bbb",
-  borderRadius: 6,
-  fontSize: 16,
-  background: "#fafbfc",
-  color: "#222",
-  outline: "none",
-};
 
 export default function ProfilePage() {
   const [me, setMe] = useState<Me | null>(null);
@@ -90,8 +79,8 @@ export default function ProfilePage() {
   if (error && !me) {
     return (
       <div style={{ maxWidth: 400, margin: "80px auto", padding: 32, textAlign: "center" }}>
-        <p style={{ color: "red" }}>{error}</p>
-        <a href={loginUrl} style={{ color: "#0070f3" }}>
+        <p style={{ color: "var(--color-danger)" }}>{error}</p>
+        <a href={loginUrl} style={{ color: "var(--color-accent)" }}>
           로그인하러 가기
         </a>
       </div>
@@ -101,22 +90,22 @@ export default function ProfilePage() {
   if (emailChanged) {
     return (
       <div
+        className="card blueprint elev-sm"
         style={{
           maxWidth: 400,
           margin: "80px auto",
           padding: 32,
-          border: "1px solid #eee",
-          borderRadius: 8,
-          background: "#fff",
-          color: "#000",
           textAlign: "center",
         }}
       >
-        <h2 style={{ marginBottom: 16 }}>이메일이 변경되었습니다</h2>
-        <p style={{ marginBottom: 16, color: "#555" }}>
+        <BlueprintCorners />
+        <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 600, marginBottom: 16 }}>
+          이메일이 변경되었습니다
+        </h2>
+        <p style={{ marginBottom: 16, color: "var(--color-neutral-700)" }}>
           변경 사항을 반영하려면 다시 로그인해주세요.
         </p>
-        <a href={loginUrl} style={{ color: "#0070f3" }}>
+        <a href={loginUrl} style={{ color: "var(--color-accent)" }}>
           다시 로그인하기
         </a>
       </div>
@@ -129,66 +118,65 @@ export default function ProfilePage() {
 
   return (
     <div
+      className="card blueprint elev-sm"
       style={{
         maxWidth: 400,
         margin: "80px auto",
         padding: 32,
-        border: "1px solid #eee",
-        borderRadius: 8,
-        background: "#fff",
-        color: "#000",
       }}
     >
-      <h2 style={{ textAlign: "center", marginBottom: 24 }}>나의 정보</h2>
+      <BlueprintCorners />
+      <h2
+        style={{
+          fontFamily: "var(--font-heading)",
+          fontWeight: 600,
+          textAlign: "center",
+          marginBottom: 24,
+        }}
+      >
+        나의 정보
+      </h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: 16 }}>
-          <label htmlFor="name">이름</label>
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={inputStyle}
-            required
-          />
+          <Field label="이름">
+            <Input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </Field>
         </div>
         <div style={{ marginBottom: 16 }}>
-          <label htmlFor="email">이메일</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={inputStyle}
-            required
-          />
+          <Field label="이메일">
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </Field>
         </div>
         <div style={{ marginBottom: 16 }}>
-          <label htmlFor="password">새 비밀번호 (변경 시에만 입력)</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={inputStyle}
-            placeholder="변경하지 않으려면 비워두세요"
-          />
+          <Field label="새 비밀번호 (변경 시에만 입력)">
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="변경하지 않으려면 비워두세요"
+            />
+          </Field>
         </div>
-        {error && <div style={{ color: "red", marginBottom: 16 }}>{error}</div>}
-        {message && <div style={{ color: "green", marginBottom: 16 }}>{message}</div>}
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: 10,
-            background: "#0070f3",
-            color: "#fff",
-            border: "none",
-            borderRadius: 4,
-          }}
-        >
+        {error && <div style={{ color: "var(--color-danger)", marginBottom: 16 }}>{error}</div>}
+        {message && (
+          <div style={{ color: "var(--color-success)", marginBottom: 16 }}>{message}</div>
+        )}
+        <Button type="submit" variant="primary" block>
           저장
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@posselect/ui": "github:lee-dohyun/posselect-ui",
     "next": "^15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
