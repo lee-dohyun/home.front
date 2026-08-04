@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Tag, Input, BlueprintCorners } from "@posselect/ui";
+import { Tag, Input, BlueprintCorners, Logo } from "@posselect/ui";
 
 const profileUrl = "/profile";
 
@@ -100,17 +100,7 @@ export default function Home() {
             gap: 24,
           }}
         >
-          <span
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontWeight: 600,
-              fontSize: 22,
-              color: "var(--color-accent)",
-              letterSpacing: -0.5,
-            }}
-          >
-            POSSELECT
-          </span>
+          <Logo size={22} />
           <div style={{ flex: 1, maxWidth: 560 }}>
             <Input placeholder="검색어를 입력하세요 (준비 중)" disabled />
           </div>
@@ -251,22 +241,14 @@ export default function Home() {
         }}
       >
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontWeight: 600,
-              fontSize: 15,
-              color: "var(--color-accent)",
-              marginBottom: 8,
-            }}
-          >
-            POSSELECT
+          <div style={{ marginBottom: 8 }}>
+            <Logo size={15} />
           </div>
           <div style={{ lineHeight: 1.8 }}>
-            상호: POSSELECT · 고객센터: 준비 중 (평일 09:00~18:00) · 사업자정보: 준비 중
+            상호: PosSelect · 고객센터: 준비 중 (평일 09:00~18:00) · 사업자정보: 준비 중
           </div>
           <div style={{ marginTop: 12, color: "var(--color-neutral-500)" }}>
-            © POSSELECT — 데모 페이지, 상품 정보는 실제와 무관합니다.
+            © PosSelect — 데모 페이지, 상품 정보는 실제와 무관합니다.
           </div>
         </div>
       </footer>

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "POSSELECT",
-  description: "검증된 상품만 엄선하는 POSSELECT",
+  title: "PosSelect",
+  description: "검증된 상품만 엄선하는 PosSelect",
 };
 
 export default function RootLayout({
