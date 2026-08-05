@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className="antialiased">
         <Script src="https://shell.posselect.com/v1/header.js" strategy="beforeInteractive" />
-        <posselect-header home-href="/" />
+        <posselect-header />
         {children}
         <Script src="https://shell.posselect.com/v1/footer.js" strategy="beforeInteractive" />
         <posselect-footer />
