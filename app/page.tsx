@@ -23,25 +23,10 @@ export default function Home() {
   return (
     <div style={{ minHeight: "100vh", background: "var(--color-bg)", color: "var(--color-text)" }}>
       {/* 신뢰 안내 바 */}
-      <div
-        style={{
-          background: "var(--color-accent-900)",
-          color: "var(--color-neutral-100)",
-          fontSize: 12,
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1200,
-            margin: "0 auto",
-            padding: "6px 24px",
-            display: "flex",
-            gap: 20,
-            overflowX: "auto",
-          }}
-        >
+      <div className="trust-bar">
+        <div className="container trust-bar-items">
           {TRUST_POINTS.map((t) => (
-            <span key={t} style={{ whiteSpace: "nowrap" }}>
+            <span key={t} className="trust-bar-item">
               ✓ {t}
             </span>
           ))}
@@ -49,79 +34,30 @@ export default function Home() {
       </div>
 
       {/* 배너 (하드코딩, 동작 안 함) */}
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "20px auto",
-          padding: "0 24px",
-        }}
-      >
-        <div
-          className="card blueprint elev-md"
-          style={{
-            height: 180,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "0 40px",
-            background: "var(--color-accent)",
-            color: "#fff",
-          }}
-        >
+      <div className="container" style={{ marginBlock: "var(--space-6)" }}>
+        <div className="card blueprint elev-md hero">
           <BlueprintCorners />
-          <div style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 24 }}>
-            검증된 상품만 엄선했습니다
-          </div>
-          <div style={{ fontSize: 14, opacity: 0.85, marginTop: 8 }}>
+          <div className="hero-title">검증된 상품만 엄선했습니다</div>
+          <div className="hero-sub">
             준비 중인 페이지입니다 — 상품/배너는 추후 실제 데이터로 교체 예정
           </div>
         </div>
       </div>
 
       {/* 상품 그리드 (하드코딩, 클릭 동작 없음) */}
-      <main style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px 60px" }}>
-        <h2
-          style={{
-            fontFamily: "var(--font-heading)",
-            fontWeight: 600,
-            fontSize: 18,
-            marginBottom: 16,
-            color: "var(--color-text)",
-          }}
-        >
-          지금 뜨는 상품
-        </h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-            gap: 16,
-          }}
-        >
+      <main className="container" style={{ paddingBottom: 60 }}>
+        <h2 style={{ fontSize: 18, marginBottom: "var(--space-4)" }}>지금 뜨는 상품</h2>
+        <div className="product-grid">
           {PRODUCTS.map((p) => (
             <div key={p.title} className="card blueprint elev-sm">
               <BlueprintCorners />
-              <div
-                style={{
-                  height: 160,
-                  background: "var(--color-neutral-200)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--color-neutral-600)",
-                  fontSize: 13,
-                }}
-              >
-                이미지 준비 중
-              </div>
-              <div style={{ padding: 12 }}>
+              <div className="product-card-media">이미지 준비 중</div>
+              <div className="product-card-body">
                 <div className="card-kicker">{p.tag}</div>
                 <div className="card-title" style={{ fontSize: 14 }}>
                   {p.title}
                 </div>
-                <div className="card-meta" style={{ fontSize: 16, fontWeight: 800 }}>
-                  {p.price}
-                </div>
+                <div className="card-meta product-card-price">{p.price}</div>
               </div>
             </div>
           ))}
