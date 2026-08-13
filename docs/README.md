@@ -1,6 +1,6 @@
 # docs
 
-`home.front` 저장소의 세부 작업/설계 문서를 모아두는 폴더.
+`store.front` 저장소의 세부 작업/설계 문서를 모아두는 폴더.
 
 - `README.md`/`CLAUDE.md`에는 저장소 전체를 이해하는 데 필요한 요약만 남기고, 특정 기능/변경/이슈에 대한 상세 기록은 이 폴더에 파일로 추가한다.
 - 파일명 컨벤션: `YYYY-MM-DD-주제.md` (예: `2026-08-01-keycloak-realm-migration.md`)

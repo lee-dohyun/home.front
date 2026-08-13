@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-`home.front` is the landing/home frontend for leedohyun.com, part of a small multi-repo
+`store.front` (repo renamed from `home.front`) is the landing/home frontend for leedohyun.com, part of a small multi-repo
 system that also includes `auth.api` (Spring Boot, handles signup/login/logout via an
 httpOnly `ACCESS_TOKEN` cookie) and `gateway` (fronts backend services, forwards identity
 via `X-User-Id`/`X-User-Role` headers).
@@ -70,5 +70,5 @@ There is no test command/framework in this repo; do not assume Jest/Vitest are a
   → production) that copies the standalone `.next`, `node_modules`, and `public` into a
   non-root (`nextjs`) user image and runs `npm start`.
 - **CI**: `.github/workflows/docker-image.yml` builds the Docker image on every push/PR to
-  `main` and pushes it to Docker Hub as `<DOCKERHUB_USERNAME>/home.front:latest` (project
+  `main` and pushes it to Docker Hub as `<DOCKERHUB_USERNAME>/store.front:latest` (project
   name is read from `package.json`'s `name` field). No lint/test step runs in CI.
