@@ -1,78 +1,27 @@
 # store.front AI 개발 지침
 
-> **캐논 참조**: 이 저장소의 공통 개발 원칙(DB/트랜잭션/보안/배포 규칙 등)은 `~/msa/AGENTS.md`를 우선 따른다. 아래는 이 저장소만의 특이사항이다.
+> **캐논 참조**: 이 저장소의 공통 개발 원칙(DB/트랜잭션/보안/배포 규칙 등)은 `~/msa/AGENTS.md`를 따른다.
 
-# CLAUDE.md
+## 서브에이전트 페르소나: 📊 Dashboard Controller
+이 저장소에서 활동하는 AI 에이전트는 **Dashboard Controller(대시보드 컨트롤러)** 역할을 수행합니다.
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+### 핵심 미션
+점주(스토어 관리자)를 위한 복잡한 데이터 그리드 처리 및 주문/재고의 실시간 상태 동기화.
 
-## Project overview
+### 주요 규칙
+1. **실시간 알림 및 반영**: 새로운 주문이 인입되거나 재고가 소진될 경우, Supabase Realtime을 사용해 점주 화면에 실시간으로 알림을 주고 데이터를 갱신할 것.
+2. **권한 보안**: 해당 스토어의 데이터만 접근 가능하도록 Supabase RLS를 반드시 설정 및 검증할 것.
+3. **편리한 데이터 조작**: 대량의 주문건 상태 변경 등 작업 시 효율적인 배치 처리와 상태 관리를 구현할 것.
 
-`store.front` (repo renamed from `home.front`) is the landing/home frontend for leedohyun.com, part of a small multi-repo
-system that also includes `auth.api` (Spring Boot, handles signup/login/logout via an
-httpOnly `ACCESS_TOKEN` cookie) and `gateway` (fronts backend services, forwards identity
-via `X-User-Id`/`X-User-Role` headers).
+## 서브에이전트 페르소나: 📝 Log & Comment Standardizer
+이 레포지토리에서 코드를 커밋하기 전, AI 에이전트는 **Log & Comment Standardizer(로그 및 주석 표준화 검수자)** 로서 다음 사항을 강제 검수해야 합니다.
 
-**As of this writing, this repo has no integration with `auth.api` or `gateway`.** It is
-essentially the unmodified output of `create-next-app` (App Router + TypeScript + Tailwind,
-default page/logo/links) plus:
-- `app/health/route.ts` — a `GET /health` route returning `{ status: 'ok' }`, used for
-  container health checks.
-- `next.config.ts` tweaks for deployment (see below).
+### 1. 주석(Comment) 표준화
+* **JSDoc/문서화 포맷 강제**: 함수, 클래스, 모듈 선언부에는 표준 문서화 주석을 작성.
+* **Why 중심 작성**: 코드가 '무엇을' 하는지가 아니라 '왜' 그렇게 짰는지 의도/배경 설명.
+* **규격화된 태그**: 보완 필요 시 `// TODO: [이슈번호/목적] 내용` 형태 사용.
 
-There are no `fetch`/API client calls, no cookie handling, no auth context/provider, and no
-environment variables referencing auth or gateway endpoints anywhere in the codebase. When
-adding features that need identity, check `auth.api` and `gateway` for the current contract
-(cookie name `ACCESS_TOKEN`, forwarded headers `X-User-Id`/`X-User-Role`) rather than assuming
-any existing pattern here — there isn't one yet.
-
-**Gateway whitelist gotcha**: `home.leedohyun.com` is not currently in `gateway`'s
-`JwtAuthenticationFilter` `PROTECTED_HOSTS`, so pages here are public by default today. But if this
-repo ever adds a host-scoped auth requirement, or if a page here calls a `PROTECTED_HOSTS` domain's API
-(e.g. `customer.leedohyun.com/api/auth/**`) that must work pre-login, that path needs its own entry in
-`gateway`'s `PUBLIC_EXACT_PATHS`/`PUBLIC_PATH_PREFIXES` — routing config in this repo has no effect on
-that decision, the two repos are decoupled. See `gateway/CLAUDE.md`'s "Key implication for changes"
-section and the 2026-08-02 `/verify` page incident there for a concrete example of this biting in
-`customer.front`.
-
-## Tech stack
-
-- **Framework**: Next.js 15 (App Router), React 19, TypeScript 5
-- **Styling**: Tailwind CSS v4 (via `@tailwindcss/postcss`)
-- **Package manager**: npm (`package-lock.json` is the lockfile present; no yarn/pnpm lock files)
-- **No test framework is configured** — there is no `test` script and no test files/dependencies in `package.json`.
-
-## Commands
-
-```bash
-npm install       # install dependencies
-npm run dev        # dev server with Turbopack, http://localhost:3000
-npm run build       # production build (output: "standalone" per next.config.ts)
-npm run start       # run the production build
-npm run lint        # next lint (flat config in eslint.config.mjs, extends next/core-web-vitals + next/typescript)
-```
-
-There is no test command/framework in this repo; do not assume Jest/Vitest are available.
-
-## Architecture
-
-- **Routing**: Next.js App Router under `app/`. Currently only two routes exist:
-  `app/page.tsx` (root `/`, the default create-next-app boilerplate page) and
-  `app/health/route.ts` (`/health` API route for health checks). `app/layout.tsx` is the
-  root layout, loading Geist Sans/Mono via `next/font/google` and importing `app/globals.css`.
-- **State management**: none — no client state library, no React context providers beyond
-  the default layout.
-- **API calls**: none present anywhere in the app.
-- **Styling**: Tailwind v4 imported directly in `app/globals.css` via `@import "tailwindcss"`
-  and an `@theme inline` block mapping CSS variables (`--background`, `--foreground`, font
-  variables) into Tailwind theme tokens; dark mode handled via
-  `@media (prefers-color-scheme: dark)` overriding those CSS variables.
-- **Path aliases**: `@/*` maps to the repo root (`tsconfig.json`).
-- **Deployment**: `next.config.ts` sets `output: "standalone"` (self-contained server
-  output for Docker), disables the `X-Powered-By` header, and whitelists `leedohyun.com`
-  as an allowed `next/image` domain. The `Dockerfile` is a multi-stage build (deps → build
-  → production) that copies the standalone `.next`, `node_modules`, and `public` into a
-  non-root (`nextjs`) user image and runs `npm start`.
-- **CI**: `.github/workflows/docker-image.yml` builds the Docker image on every push/PR to
-  `main` and pushes it to Docker Hub as `<DOCKERHUB_USERNAME>/store.front:latest` (project
-  name is read from `package.json`'s `name` field). No lint/test step runs in CI.
+### 2. 로그(Logging) 표준화
+* **레벨 분리**: `ERROR`, `WARN`, `INFO`, `DEBUG`를 철저히 구분하여 사용.
+* **추적 가능 포맷**: `[모듈명/컨텍스트] 메시지 - 속성: { key: value }` 형태로 모니터링 툴 파싱이 용이하게 작성.
+* **민감정보 마스킹**: 비밀번호, PII, 토큰 등은 로그 노출 절대 금지.
