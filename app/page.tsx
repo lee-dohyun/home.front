@@ -71,7 +71,6 @@ async function getCategories(): Promise<Category[]> {
 
 /**
  * product.api에서 메인 페이지 상단 프로모션 배너 목록을 조회합니다.
- * TODO: [store.front#7] 배너 클릭 시 노출될 상세 페이지 라우팅 로직 추가 필요
  */
 async function getBanners(): Promise<Banner[]> {
   try {
@@ -141,16 +140,18 @@ export default async function Home() {
       {/* 배너 영역 */}
       {banners.length > 0 && (
         <div className="container" style={{ marginBlock: "var(--space-6)" }}>
-          <div className="card blueprint elev-md hero" style={{ background: banners[0].bgColor }}>
-            <BlueprintCorners />
-            <div className="hero-title">{banners[0].title}</div>
-            <div className="hero-sub">{banners[0].subtitle}</div>
-            {banners[0].imageUrl && (
-              <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "50%", opacity: 0.2 }}>
-                <Image src={banners[0].imageUrl} alt="banner" fill style={{ objectFit: "cover" }} />
-              </div>
-            )}
-          </div>
+          <Link href={banners[0].link} style={{ textDecoration: "none" }}>
+            <div className="card blueprint elev-md hero" style={{ background: banners[0].bgColor, cursor: "pointer" }}>
+              <BlueprintCorners />
+              <div className="hero-title" style={{ color: "#fff" }}>{banners[0].title}</div>
+              <div className="hero-sub" style={{ color: "rgba(255,255,255,0.8)" }}>{banners[0].subtitle}</div>
+              {banners[0].imageUrl && (
+                <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "50%", opacity: 0.2 }}>
+                  <Image src={banners[0].imageUrl} alt="banner" fill style={{ objectFit: "cover" }} />
+                </div>
+              )}
+            </div>
+          </Link>
         </div>
       )}
 
