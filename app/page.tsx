@@ -69,27 +69,17 @@ async function getCategories(): Promise<Category[]> {
   }
 }
 
+/**
+ * product.api에서 메인 페이지 상단 프로모션 배너 목록을 조회합니다.
+ * TODO: [store.front#7] 배너 클릭 시 노출될 상세 페이지 라우팅 로직 추가 필요
+ */
 async function getBanners(): Promise<Banner[]> {
-  // In a real scenario, fetch from the banner API, but since this is a Mock API we will return the mock directly 
-  // or fetch from an absolute URL if NEXT_PUBLIC_SITE_URL is available.
-  return [
-    {
-      id: 1,
-      title: "검증된 상품만 엄선했습니다",
-      subtitle: "posselect.com 오픈 기념 특별전",
-      imageUrl: null,
-      link: "/",
-      bgColor: "var(--color-primary)"
-    },
-    {
-      id: 2,
-      title: "새로운 계절, 신상품 입고",
-      subtitle: "트렌드를 선도하는 상품들을 만나보세요",
-      imageUrl: null,
-      link: "/",
-      bgColor: "var(--color-secondary)"
-    }
-  ];
+  try {
+    return await fetchProductApi('/api/products/main/banners', { next: { revalidate: 300 } });
+  } catch (e) {
+    console.error("[Home/getBanners] 배너 조회 실패 - 속성: { error: ", e, " }");
+    return [];
+  }
 }
 
 export default async function Home() {
