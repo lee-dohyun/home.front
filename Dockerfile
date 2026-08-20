@@ -23,6 +23,7 @@ COPY --from=builder /app/next.config.ts ./next.config.ts
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
+RUN chown -R nextjs:nodejs /app/.next
 USER nextjs
 
 CMD ["npm", "start"]
