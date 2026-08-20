@@ -11,7 +11,10 @@ const nextConfig: NextConfig = {
   assetPrefix: "/",
   // 이미지 도메인이 있다면 (예: CDN)
   images: {
-    domains: ["posselect.com"],
+    remotePatterns: [
+      { protocol: "https", hostname: "posselect.com" },
+      { protocol: "https", hostname: "image.posselect.com" },
+    ],
   },
 };
 
