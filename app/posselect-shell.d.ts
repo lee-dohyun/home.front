@@ -15,3 +15,20 @@ declare module "react" {
     }
   }
 }
+
+declare global {
+  interface Window {
+    posselect?: {
+      recentlyViewed?: {
+        get: () => Array<{
+          id: number;
+          name: string;
+          price: number;
+          imageUrl: string | null;
+          href: string;
+          viewedAt: number;
+        }>;
+      };
+    };
+  }
+}

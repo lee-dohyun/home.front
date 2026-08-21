@@ -2,6 +2,7 @@ import { BlueprintCorners } from "@posselect/ui";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchProductApi } from "@/lib/product-api";
+import RecentlyViewedRail from "./components/RecentlyViewedRail";
 
 interface ProductSummary {
   id: number;
@@ -157,6 +158,8 @@ export default async function Home() {
 
       {/* 상품 그리드 */}
       <main className="container" style={{ paddingBottom: 60 }}>
+        <RecentlyViewedRail />
+
         <section style={{ marginBottom: "var(--space-8)" }}>
           <h2 style={{ fontSize: 20, fontWeight: "bold", marginBottom: "var(--space-4)" }}>베스트 상품</h2>
           {renderProductList(bestProducts)}
