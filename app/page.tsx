@@ -2,6 +2,7 @@ import { BlueprintCorners } from "@posselect/ui";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchProductApi } from "@/lib/product-api";
+import HomeQuickMenu from "./components/HomeQuickMenu";
 
 interface ProductSummary {
   id: number;
@@ -183,6 +184,8 @@ export default async function Home() {
           );
         })}
       </main>
+
+      <HomeQuickMenu />
     </div>
   );
 }
