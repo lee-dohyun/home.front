@@ -3,6 +3,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { fetchProductApi } from "@/lib/product-api";
 
+/**
+ * 이 페이지는 빌드 타임에 프리렌더하지 않는다(#53).
+ *
+ * `fetchProductApi()`의 기본 베이스 URL은 클러스터 내부 주소
+ * (`product-api.customer.svc.cluster.local`)인데, Docker 빌드는 GitHub 호스티드 러너에서
+ * 돌기 때문에 거기서는 이 주소가 해석되지 않는다. 그래서 프리렌더를 허용하면 둘 중 하나가 된다.
+ *   - 조회 실패를 삼키면: "상품 0개"인 빈 HTML이 이미지에 구워져 배포 직후 빈 쇼핑몰이 뜬다(#41).
+ *   - 조회 실패에 예외를 던지면: 빌드 자체가 죽는다(#53, 커밋 23e61a4).
+ * 빌드 타임에 API를 아예 부르지 않는 것이 두 증상의 공통 뿌리를 없애는 방법이다.
+ *
+ * 아래 조회 함수들의 `next: { revalidate }`는 `force-dynamic` 아래에서도 그대로 유효하다.
+ * (Next 15는 **캐시 설정이 없는** fetch만 `force-dynamic`에서 no-store로 덮는다.)
+ * 즉 HTML 렌더는 매 요청이지만 product.api 호출은 revalidate 주기당 1회다.
+ */
+export const dynamic = "force-dynamic";
+
 interface ProductSummary {
   id: number;
   categoryId: number;
