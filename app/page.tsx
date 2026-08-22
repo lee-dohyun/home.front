@@ -1,4 +1,4 @@
-import { BlueprintCorners } from "@posselect/ui";
+import { BlueprintCorners, Carousel } from "@posselect/ui";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchProductApi } from "@/lib/product-api";
@@ -140,18 +140,18 @@ export default async function Home() {
       {/* 배너 영역 */}
       {banners.length > 0 && (
         <div className="container" style={{ marginBlock: "var(--space-6)" }}>
-          <Link href={banners[0].link} style={{ textDecoration: "none" }}>
-            <div className="card blueprint elev-md hero" style={{ background: banners[0].bgColor, cursor: "pointer" }}>
-              <BlueprintCorners />
-              <div className="hero-title" style={{ color: "#fff" }}>{banners[0].title}</div>
-              <div className="hero-sub" style={{ color: "rgba(255,255,255,0.8)" }}>{banners[0].subtitle}</div>
-              {banners[0].imageUrl && (
-                <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "50%", opacity: 0.2 }}>
-                  <Image src={banners[0].imageUrl} alt="banner" fill style={{ objectFit: "cover" }} />
-                </div>
-              )}
-            </div>
-          </Link>
+          <div style={{ height: "300px" }}>
+            <Carousel
+              items={banners.map(b => ({
+                id: b.id,
+                title: b.title,
+                subtitle: b.subtitle,
+                imageUrl: b.imageUrl || undefined,
+                link: b.link,
+                bgColor: b.bgColor,
+              }))}
+            />
+          </div>
         </div>
       )}
 
