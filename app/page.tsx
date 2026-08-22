@@ -1,4 +1,5 @@
 import { BlueprintCorners } from "@posselect/ui";
+import { MainQuickMenu } from "@/components/MainQuickMenu";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchProductApi } from "@/lib/product-api";
@@ -183,6 +184,7 @@ export default async function Home() {
           );
         })}
       </main>
+      <MainQuickMenu />
     </div>
   );
 }
