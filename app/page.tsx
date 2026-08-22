@@ -2,6 +2,7 @@ import { BlueprintCorners } from "@posselect/ui";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchProductApi } from "@/lib/product-api";
+import { WishlistButton } from "@/components/WishlistButton";
 
 interface ProductSummary {
   id: number;
@@ -104,6 +105,7 @@ export default async function Home() {
             <div className="card blueprint elev-sm" style={{ cursor: "pointer", height: "100%" }}>
               <BlueprintCorners />
               <div className="product-card-media" style={{ position: "relative", backgroundColor: "#f5f5f5" }}>
+                <WishlistButton productId={p.id} />
                 {p.thumbnailUrl ? (
                   <Image src={p.thumbnailUrl} alt={p.name} fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 100vw, 33vw" />
                 ) : (
